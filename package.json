@@ -1,10 +1,9 @@
 {
-  "name": "jsnd3_mars_dashboard",
+  "name": "functional-js-mars-rover",
   "version": "1.0.0",
-  "description": "course project",
+  "description": "Functional Programming with Javascript Exercise: Mars rover dashboard",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/server/index.js"
   },
   "author": "",

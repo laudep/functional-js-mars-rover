@@ -14,5 +14,10 @@
     "express": "^4.17.1",
     "immutable": "^4.0.0-rc.12",
     "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
   }
 }

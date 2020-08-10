@@ -4,7 +4,7 @@
   "description": "Functional Programming with Javascript Exercise: Mars rover dashboard",
   "main": "index.js",
   "scripts": {
-    "start": "node src/server/index.js"
+    "start": "nodemon src/server/index.js"
   },
   "author": "",
   "license": "ISC",

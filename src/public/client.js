@@ -13,39 +13,40 @@ const updateStore = (store, newState) => {
 };
 
 const render = async (root, state) => {
-  root.innerHTML = App(state);
+  const { menu, body } = App(state);
+  root.innerHTML = body;
+  document.getElementById("menu").innerHTML = menu;
+};
+
+const createParagraph = (text) => `<p>${text}</p>`;
+const createMenuItem = (rover) =>
+  `<li><a href='#' id='${rover.name}'>${rover.name}</a></li>`;
+
+const createMenuItems = (rovers) =>
+  rovers.reduce((menuItems, rover) => {
+    menuItems.push(createMenuItem(rover));
+    return menuItems;
+  }, []);
+
+const createMenu = (rovers) =>
+  `<ul class='menu'>${createMenuItems(rovers).join("")}</ul>`;
+
+const createBody = (state) => {
+  if (!state.selectedRover) {
+    return createParagraph("Please select a Rover");
+  }
 };
 
 // create content
 const App = (state) => {
-  let { rovers, apod } = state;
+  const { rovers, selectedRover } = state;
 
-  return `
-        <header></header>
-        <main>
-            ${Greeting(store.user.name)}
-            <section>
-                <h3>Put things on the page!</h3>
-                <p>Here is an example section.</p>
-                <p>
-                    One of the most popular websites at NASA is the Astronomy Picture of the Day. In fact, this website is one of
-                    the most popular websites across all federal agencies. It has the popular appeal of a Justin Bieber video.
-                    This endpoint structures the APOD imagery and associated metadata so that it can be repurposed for other
-                    applications. In addition, if the concept_tags parameter is set to True, then keywords derived from the image
-                    explanation are returned. These keywords could be used as auto-generated hashtags for twitter or instagram feeds;
-                    but generally help with discoverability of relevant imagery.
-                </p>
-                ${ImageOfTheDay(apod)}
-            </section>
-        </main>
-        <footer></footer>
-    `;
+  const menu = createMenu(rovers);
+
+  const body = createBody(state);
+
+  return { menu, body };
 };
-
-// listening for load event because page should load before any JS is called
-window.addEventListener("load", () => {
-  render(root, store);
-});
 
 // ------------------------------------------------------  COMPONENTS
 
@@ -72,6 +73,7 @@ const ImageOfTheDay = (apod) => {
   console.log(photodate.getDate() === today.getDate());
   if (!apod || apod.date === today.getDate()) {
     getImageOfTheDay(store);
+    return;
   }
 
   // check if the photo of the day is actually type video!
@@ -100,13 +102,13 @@ const getImageOfTheDay = (state) => {
   fetch(`${BASE_URL}/apod`)
     .then((res) => res.json())
     .then((apod) => updateStore(store, { apod }));
-
-  return data;
 };
 
 const getRovers = () => fetch(`${BASE_URL}/rovers`).then((res) => res.json());
 
-getRovers().then((rovers) => {
-  debugger;
-  console.log(rovers);
+// listening for load event because page should load before any JS is called
+window.addEventListener("load", () => {
+  getRovers().then((rovers) => {
+    updateStore(store, { rovers: rovers });
+  });
 });

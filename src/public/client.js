@@ -2,6 +2,7 @@ let store = {
   user: { name: "Student" },
   apod: "",
   rovers: ["Curiosity", "Opportunity", "Spirit"],
+  selectedRover: "",
 };
 
 // add our markup to the page
@@ -20,7 +21,7 @@ const render = async (root, state) => {
 
 const createParagraph = (text) => `<p>${text}</p>`;
 const createMenuItem = (rover) =>
-  `<li><a href='#' id='${rover.name}'>${rover.name}</a></li>`;
+  `<li><a href='#' class="rover-header" id='${rover.name}'>${rover.name}</a></li>`;
 
 const createMenuItems = (rovers) =>
   rovers.reduce((menuItems, rover) => {
@@ -34,6 +35,8 @@ const createMenu = (rovers) =>
 const createBody = (state) => {
   if (!state.selectedRover) {
     return createParagraph("Please select a Rover");
+  } else {
+    return `Selected rover: ${state.selectedRover}`;
   }
 };
 
@@ -49,8 +52,6 @@ const App = (state) => {
 };
 
 // ------------------------------------------------------  COMPONENTS
-
-
 
 // ------------------------------------------------------  API CALLS
 
@@ -73,3 +74,16 @@ window.addEventListener("load", () => {
     updateStore(store, { rovers: rovers });
   });
 });
+
+const handleMenuClick = (event) => {
+  const element = event.target;
+  const selectedRover = element.id;
+
+  const selectionChanged =
+    element.className === "rover-header" && selectedRover !== store.selectedRover;
+  if (selectionChanged) {
+    updateStore(store, { selectedRover: selectedRover });
+  }
+};
+
+document.getElementById("menu").addEventListener("click", handleMenuClick);

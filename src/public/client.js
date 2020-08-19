@@ -20,17 +20,20 @@ const render = async (root, state) => {
 };
 
 const createParagraph = (text) => `<p>${text}</p>`;
-const createMenuItem = (rover) =>
-  `<li><a href='#' class="rover-header" id='${rover.name}'>${rover.name}</a></li>`;
+const createMenuItem = (rover, isSelected) =>
+  `<li><a href='#' class="rover-header${isSelected ? " selected" : ""}" id='${
+    rover.name
+  }'>${rover.name}</a></li>`;
 
-const createMenuItems = (rovers) =>
+const createMenuItems = (rovers, selectedRover) =>
   rovers.reduce((menuItems, rover) => {
-    menuItems.push(createMenuItem(rover));
+    const isSelected = rover.name === selectedRover;
+    menuItems.push(createMenuItem(rover, isSelected));
     return menuItems;
   }, []);
 
-const createMenu = (rovers) =>
-  `<ul class='menu'>${createMenuItems(rovers).join("")}</ul>`;
+const createMenu = (rovers, selectedRover) =>
+  `<ul class='menu'>${createMenuItems(rovers, selectedRover).join("")}</ul>`;
 
 const createBody = (state) => {
   if (!state.selectedRover) {
@@ -44,7 +47,7 @@ const createBody = (state) => {
 const App = (state) => {
   const { rovers, selectedRover } = state;
 
-  const menu = createMenu(rovers);
+  const menu = createMenu(rovers, selectedRover);
 
   const body = createBody(state);
 
@@ -80,7 +83,8 @@ const handleMenuClick = (event) => {
   const selectedRover = element.id;
 
   const selectionChanged =
-    element.className === "rover-header" && selectedRover !== store.selectedRover;
+    element.className === "rover-header" &&
+    selectedRover !== store.selectedRover;
   if (selectionChanged) {
     updateStore(store, { selectedRover: selectedRover });
   }

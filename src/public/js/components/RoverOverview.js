@@ -1,6 +1,6 @@
 import { RoverPhoto } from "./RoverPhoto"
 
-const RoverProperty = (name, value) =>
+const Property = (name, value) =>
     `<tr>
         <td>${name}:   </td>
         <td>${value}</td>
@@ -12,11 +12,11 @@ const RoverOverview = (rover) => {
     }
     const photos = rover.photos || [];
     return `<table class="rover-overview">
-        ${RoverProperty("launch date", rover.launch_date)}
-        ${RoverProperty("landing date", rover.landing_date)}
-        ${RoverProperty("last photo date", `${rover.max_date} (sol ${rover.max_sol})`)}
-        ${RoverProperty("photos taken", rover.total_photos.toLocaleString())}
-        ${RoverProperty("status", `${rover.status} ${rover.status === 'active' ? '🚀' : '💤'}`)}
+        ${Property("launch date", rover.launch_date)}
+        ${Property("landing date", rover.landing_date)}
+        ${Property("last photo date", `${rover.max_date} (sol ${rover.max_sol})`)}
+        ${Property("photos taken", rover.total_photos.toLocaleString())}
+        ${Property("status", `${rover.status} ${rover.status === 'active' ? '🚀' : '💤'}`)}
     </table>
     </br >
     ${ photos.map(photo => RoverPhoto(photo))} `

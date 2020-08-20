@@ -1,7 +1,7 @@
 body {
   display: flex;
   flex-direction: column;
-  font-family: Arial;
+  font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;;
   min-height: 100vh;
   margin: 0;
 }
@@ -24,7 +24,6 @@ body {
   display: block;
   color: white;
   text-align: center;
-  padding: 14px 16px;
   text-decoration: none;
   padding: 20px;
 }

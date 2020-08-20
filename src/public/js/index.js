@@ -20,9 +20,9 @@ let store = {
 // add our markup to the page
 const root = document.getElementById("root");
 
-const updateStore = (store, newState) => {
-  store = Object.assign(store, newState);
-  render(root, store);
+const updateStore = (currentStore, newState) => {
+  currentStore = Object.assign(currentStore, newState);
+  render(root, currentStore);
 };
 
 
@@ -61,10 +61,11 @@ const handleMenuClick = (event) => {
       selectedRoverName: selectedRoverName
     });
 
-    if (selectedRover && !selectedRover.photos)
+    if (selectedRover && !selectedRover.photos) {
       Api.getPhotos(selectedRoverName)
-      .then(photos => selectedRover.photos = photos)
-      .catch(error => console.error(error));;
+        .then(photos => selectedRover.photos = photos)
+        .catch(error => console.error(error));
+    }
   }
 };
 

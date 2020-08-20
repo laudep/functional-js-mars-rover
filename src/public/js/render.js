@@ -31,12 +31,12 @@ const App = (state) => {
 
 const createBody = (state) => {
     const { rovers, selectedRoverName } = state;
-    const rover = selectedRoverName
+    const selectedRover = selectedRoverName
         ? rovers.find(rover => rover.name === selectedRoverName)
         : null;
 
     const title = Title(selectedRoverName);
-    const roverOverview = RoverOverview(rover);
+    const roverOverview = RoverOverview(selectedRover);
     return title + roverOverview;
 };
 

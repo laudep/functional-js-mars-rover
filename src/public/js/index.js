@@ -1,6 +1,6 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
-import 'bootstrap';
+// import 'bootstrap';
 import index from '../css/index.scss';
 import {
   render
@@ -26,21 +26,25 @@ const updateStore = (store, newState) => {
 };
 
 
-// ------------------------------------------------------  COMPONENTS
-
-const photos = Api.getPhotos("Opportunity")
-  .then(res => {
-    debugger;
-    console.log(res)
-  });
-
 // listening for load event because page should load before any JS is called
 window.addEventListener("load", () => {
-  Api.getRovers().then((rovers) => {
+  Api.getRovers().then(async (rovers) => {
     updateStore(store, {
       rovers: rovers
     });
+
+    for (const rover of rovers) {
+      await Api.getPhotos(rover.name)
+        .then(photos => rover.photos = photos);
+    }
+
+    updateStore(store, {
+      rovers: rovers
+    });
+
+
   });
+
 });
 
 const handleMenuClick = (event) => {
@@ -59,7 +63,8 @@ const handleMenuClick = (event) => {
 
     if (selectedRover && !selectedRover.photos)
       Api.getPhotos(selectedRoverName)
-      .then(photos => selectedRover.photos = photos);
+      .then(photos => selectedRover.photos = photos)
+      .catch(error => console.error(error));;
   }
 };
 

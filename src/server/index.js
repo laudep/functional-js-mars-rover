@@ -9,6 +9,7 @@ const port = 3001;
 
 const API_BASE_URL = "https://api.nasa.gov";
 const API_ENDPOINT_ROVER = "/mars-photos/api/v1/rovers";
+const AMOUNT_OF_PHOTOS_TO_SERVE = 5;
 
 app.use(bodyParser.urlencoded({
   extended: false
@@ -19,48 +20,42 @@ app.use("/", express.static(path.join(__dirname, "../public")));
 
 const fetchJson = async (url) => (await fetch(url)).json();
 
-// your API calls
+// remove unnecessary rover data
+const purgeRoverData = rovers => rovers.map(({
+  cameras,
+  id,
+  ...properties
+}) =>
+  properties
+);
 
-// // example API call
-// app.get("/apod", async (req, res) => {
-//   try {
-//     let image = await fetch(
-//       `https://api.nasa.gov/planetary/apod?api_key=${process.env.API_KEY}`
-//     ).then((res) => res.json());
-//     res.send({ image });
-//   } catch (err) {
-//     console.log("error:", err);
-//   }
-// });
+// remove unnecessary photo data
+const purgePhotoData = photos => photos.map(({
+  rover,
+  camera,
+  ...properties
+}) =>
+  properties
+);
 
 // rovers API call
+app.get("/rovers", async (req, res, next) => {
+  const endpoint = `${API_BASE_URL}${API_ENDPOINT_ROVER}?api_key=${process.env.API_KEY}`;
 
-app.get("/rovers", async (req, res) => {
-  try {
-    const roversData = await fetchJson(
-      `${API_BASE_URL}${API_ENDPOINT_ROVER}?api_key=${process.env.API_KEY}`
-    );
-    res.send(roversData.rovers);
-  } catch (err) {
-    throw new Error(err);
-  }
+  const result = await fetchJson(endpoint).catch(err => next(err));
+  res.send(purgeRoverData(result.rovers));
 });
 
-app.get("/rovers/:roverName/photos", async (req, res) => {
-  try {
-    const {
-      roverName
-    } = req.params;
-    console.log(roverName);
-    // const data = await fetchJson(`${API_BASE_URL}${API_ENDPOINT_ROVER}/${roverName}/photos?sol=1000&api_key=${process.env.API_KEY}`);
+// rover photos API call
+app.get("/rovers/:roverName/photos", async (req, res, next) => {
+  const { roverName } = req.params;
+  const endpoint = `${API_BASE_URL}${API_ENDPOINT_ROVER}/${roverName}/latest_photos?api_key=${process.env.API_KEY}`;
 
-    const {
-      latest_photos
-    } = await fetchJson(`${API_BASE_URL}${API_ENDPOINT_ROVER}/${roverName}/latest_photos?api_key=${process.env.API_KEY}`);
-    res.send(latest_photos);
-  } catch (err) {
-    throw new Error(err);
-  }
+  const result = await fetchJson(endpoint).catch(error => next(error));
+  const lastPhotos = result.latest_photos
+    ? result.latest_photos.slice(0, AMOUNT_OF_PHOTOS_TO_SERVE)
+    : [];
+  res.send(purgePhotoData(lastPhotos));
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

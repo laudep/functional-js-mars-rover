@@ -33,18 +33,15 @@ window.addEventListener("load", () => {
       rovers: rovers
     });
 
-    for (const rover of rovers) {
-      await Api.getPhotos(rover.name)
-        .then(photos => rover.photos = photos);
-    }
+    await rovers
+      .map(rover => Api.getPhotos(rover.name).then(photos => {
+        rover.photos = photos;
 
-    updateStore(store, {
-      rovers: rovers
-    });
-
-
-  });
-
+        updateStore(store, {
+          rovers: rovers
+        });
+      }));
+  })
 });
 
 const handleMenuClick = (event) => {

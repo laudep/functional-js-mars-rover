@@ -1,4 +1,4 @@
-# Functional Programming with Javascript 
+# Mars Rover Dashboard
 
 ## Student Instructions
 

@@ -1,13 +1,13 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
-// import 'bootstrap';
+
 import index from '../css/index.scss';
 import {
   render
 } from './render'
 import Api from './api'
 
-let store = {
+const store = {
   user: {
     name: "Student"
   },

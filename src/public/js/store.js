@@ -1,7 +1,7 @@
-import { Map, fromJS } from 'immutable';
+import { Map as IMap, fromJS } from 'immutable';
 import { ADD_ROVERS, ADD_ROVER_PHOTOS, SET_SELECTED_ROVER } from "./actions/rovers"
 
-let state = Map({
+let state = IMap({
     rovers: [],
     selectedRoverName: ""
 });
@@ -32,7 +32,6 @@ const store = (action, callback) => {
     }
 
     const newStore = state.toJS();
-
     callback(newStore);
     return newStore;
 };

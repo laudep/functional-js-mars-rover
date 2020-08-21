@@ -19,6 +19,11 @@ body {
   filter: grayscale(100%);
 }
 
+.title img:hover {
+  -webkit-filter: none;
+  filter: none;
+}
+
 .menu {
   list-style-type: none;
   margin: 0;
@@ -41,12 +46,12 @@ body {
   padding: 20px;
 }
 
-.menu li a:hover:not(.active) {
+.menu li a:hover:not(.selected) {
   background-color: #111;
 }
 
-.menu .active {
-  background-color: #4caf50;
+.menu .selected {
+  background-color: #4d3e3e;
 }
 
 .rover-overview {

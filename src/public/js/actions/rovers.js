@@ -1,0 +1,3 @@
+export const ADD_ROVERS = "ADD_ROVERS";
+export const ADD_ROVER_PHOTOS = "ADD_ROVER_PHOTOS";
+export const SET_SELECTED_ROVER = "SET_SELECTED_ROVER";

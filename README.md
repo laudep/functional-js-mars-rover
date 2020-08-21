@@ -3,7 +3,7 @@
 </p>
 <h1 align="center"> Mars Rover Dashboard </h1>
 <p align="center">
-  <b>An exercise in function programming in JavaScript</b>
+  <b>An exercise in functional programming in JavaScript</b>
 </p>
 
 ## Description

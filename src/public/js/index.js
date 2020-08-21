@@ -10,8 +10,6 @@ const store = {
   selectedRoverName: "",
 };
 
-
-// add our markup to the page
 const root = document.getElementById("root");
 
 const updateStore = (currentStore, newState) => {

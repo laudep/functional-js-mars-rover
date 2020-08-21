@@ -1,10 +1,11 @@
 {
   "name": "functional-js-mars-rover",
   "version": "1.0.0",
-  "description": "Functional Programming with Javascript Exercise: Mars rover dashboard",
+  "description": "Functional Programming with Javascript: Mars Rover Dashboard",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --watch src/ --exec npm run build --ext js,scss,css,html",
+    "start": "node dist/server/index.js",
+    "start-dev": "nodemon --watch src/ --exec npm run build && npm start --ext js,scss,css,html",
     "serve-dev": "nodemon --watch dist/ ./dist/server/index.js",
     "debug": "nodemon dist/server/index.js --inspect",
     "build": "webpack --config webpack.config.js"
@@ -41,5 +42,8 @@
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
+  },
+  "engines": {
+    "node": "12.6"
   }
 }

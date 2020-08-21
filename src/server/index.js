@@ -3,6 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const fetch = require("node-fetch");
 const path = require("path");
+const camelcaseKeys = require('camelcase-keys');
 
 const app = express();
 const DEFAULT_PORT = 3001;
@@ -26,7 +27,7 @@ const purgeRoverData = rovers => rovers.map(({
     id,
     ...properties
   }) =>
-  properties
+  camelcaseKeys(properties)
 );
 
 // remove unnecessary photo data
@@ -35,7 +36,7 @@ const purgePhotoData = photos => photos.map(({
     camera,
     ...properties
   }) =>
-  properties
+  camelcaseKeys(properties)
 );
 
 // rovers API call
@@ -55,8 +56,7 @@ app.get("/rovers/:roverName/photos", async (req, res, next) => {
 
   const result = await fetchJson(endpoint).catch(error => next(error));
   const lastPhotos = result.latest_photos ?
-    result.latest_photos.slice(0, AMOUNT_OF_PHOTOS_TO_SERVE) :
-    [];
+    result.latest_photos.slice(0, AMOUNT_OF_PHOTOS_TO_SERVE) : [];
   res.send(purgePhotoData(lastPhotos));
 });
 

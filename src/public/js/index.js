@@ -2,17 +2,11 @@ import "core-js/stable";
 import "regenerator-runtime/runtime";
 
 import index from '../css/index.scss';
-import {
-  render
-} from './render'
+import { render } from './render'
 import Api from './api'
 
 const store = {
-  user: {
-    name: "Student"
-  },
-  apod: "",
-  rovers: ["Curiosity", "Opportunity", "Spirit"],
+  rovers: [],
   selectedRoverName: "",
 };
 

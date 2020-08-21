@@ -11,13 +11,13 @@ const RoverOverview = (rover) => {
         return '';
     }
     const photos = rover.photos || [];
-    const lastPhotoText = `${rover.max_date} (sol ${rover.max_sol})`;
+    const lastPhotoText = `${rover.maxDate} (sol ${rover.maxSol})`;
     const statusText = `${rover.status} ${rover.status === 'active' ? '🚀' : '💤'}`;
     return `<table class="rover-overview">
-        ${Property("launch date", rover.launch_date)}
-        ${Property("landing date", rover.landing_date)}
+        ${Property("launch date", rover.launchDate)}
+        ${Property("landing date", rover.landingDate)}
         ${Property("last photo date", lastPhotoText)}
-        ${Property("photos taken", rover.total_photos.toLocaleString())}
+        ${Property("photos taken", rover.totalPhotos.toLocaleString())}
         ${Property("status", statusText)}
     </table>
     </br >

@@ -1,12 +1,12 @@
 export const RoverPhoto = photo =>
     `<img id="img_${photo.id}"
       class="rover-image"
-      src="${photo.img_src}"
-      alt="${photo.img_src}">
+      src="${photo.imgSrc}"
+      alt="${photo.imgSrc}">
 <div id="modal_${photo.id}" class="modal">
    <span id="close_${photo.id}" class="close">&times;</span>
    <img id="modal_img_${photo.id}" class="modal-content">
-   <div id="caption_${photo.id}" class="caption">taken on ${photo.earth_date}<br>(sol ${photo.sol})</div>
+   <div id="caption_${photo.id}" class="caption">taken on ${photo.earthDate}<br>(sol ${photo.sol})</div>
 </div>
 `;
 

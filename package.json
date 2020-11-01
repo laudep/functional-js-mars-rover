@@ -24,8 +24,13 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
+<<<<<<< dependabot/npm_and_yarn/autoprefixer-10.0.1
+    "@babel/preset-env": "^7.11.5",
+    "autoprefixer": "^10.0.1",
+=======
     "@babel/preset-env": "^7.12.1",
     "autoprefixer": "^9.8.6",
+>>>>>>> master
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.2.1",
